@@ -6,9 +6,11 @@ import com.mygdx.game.Algo;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Algo(), config);
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "test-game";
 		//cfg.useGL20 = false;
+		cfg.width = 480;
 		cfg.height = 320;
+		new LwjglApplication(new Algo(), cfg);
 	}
 }
