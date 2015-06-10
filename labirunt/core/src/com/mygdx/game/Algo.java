@@ -21,7 +21,6 @@ public class Algo extends ApplicationAdapter {
 
 	Cell[][] map;
 
-	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
