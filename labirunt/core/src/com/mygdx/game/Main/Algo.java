@@ -10,13 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Main.Cell;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Units.Unit;
 import com.mygdx.game.Wall_Empty.Empty;
 import com.mygdx.game.Wall_Empty.Wall;
 import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 public class Algo extends ApplicationAdapter {
-	public static final int FIELD_SIZE = 51;
-	public static final float UPDATE_TIME = 0.0001f;
+	public static final int FIELD_SIZE = 31;
+	public static final float UPDATE_TIME = 0.5001f;
 
 	SpriteBatch batch;
 	OrthographicCamera camera;
@@ -34,8 +35,8 @@ public class Algo extends ApplicationAdapter {
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
 
 
-		Texture texture = new Texture(Gdx.files.internal("br.jpg"));
-		Texture mob = new Texture(Gdx.files.internal("mob.jpg"));
+		//Texture texture = new Texture(Gdx.files.internal("br.jpg"));
+		Texture texture = new Texture(Gdx.files.internal("mob.jpg"));
 
 		char[][] bmap = (new MazeGenerator()).getMaze(FIELD_SIZE - 1);
 		for (int i = 0; i < FIELD_SIZE; i++)
@@ -46,12 +47,7 @@ public class Algo extends ApplicationAdapter {
 					map[i][j] = new Wall(texture);
 			}
 
-		/*player = new Rectangle();
-		player.x = 480 / 2 - 16 / 2;
-		player.y = 20;
-		player.width = 20;
-		player.height = 20;
-*/
+
 	}
 
 	@Override
@@ -60,45 +56,15 @@ public class Algo extends ApplicationAdapter {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		/*
-		batch.setProjectionMatrix(camera.combined);
-		camera.update();
-		batch.begin();
-		batch.draw(mob, player.x, player.y);
-		batch.end();*/
 
 		batch.setProjectionMatrix(camera.combined);
-		camera.update();
-		batch.begin();
 
+		batch.begin();
 		for (int i = 0; i < FIELD_SIZE; i++)
-			for (int j = 0; j < FIELD_SIZE; j++){
+			for (int j = 0; j < FIELD_SIZE; j++)
 				map[i][j].draw(batch, i, j);
-			}
-
 		batch.end();
-
 	}
-
-	/*@Override
-	public void dispose() {
-
-		mob.dispose();
-		texture.dispose();
-		batch.dispose();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resume() {
-	}*/
 
 	public void update() {
 
@@ -123,7 +89,7 @@ public class Algo extends ApplicationAdapter {
 		if(input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
 			a = UPDATE_TIME - Gdx.graphics.getDeltaTime();}
 
-		if(input.isKeyPressed(Input.Keys.LEFT))
+		/*if(input.isKeyPressed(Input.Keys.LEFT))
 			camera.translate(new Vector2(-Gdx.graphics.getDeltaTime()*50,0));
 		if(input.isKeyPressed(Input.Keys.RIGHT))
 			camera.translate(new Vector2(Gdx.graphics.getDeltaTime()*50,0));
@@ -131,13 +97,28 @@ public class Algo extends ApplicationAdapter {
 			camera.translate(new Vector2(0, Gdx.graphics.getDeltaTime() * 50));
 		if(input.isKeyPressed(Input.Keys.DOWN))
 			camera.translate(new Vector2(0, -Gdx.graphics.getDeltaTime() * 50));
-
+		*/
 		if(input.isKeyPressed(Input.Keys.SPACE)){
 			a = 1f;
 			camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		}
 
 		camera.update();
+
+		{
+			float stepX = Gdx.graphics.getWidth() / FIELD_SIZE;
+			float stepY = Gdx.graphics.getHeight() / FIELD_SIZE;
+			float x = input.getX();
+			float y = input.getY();
+			for (int i = 0; i < FIELD_SIZE; i++)
+				for (int j = 0; j < FIELD_SIZE; j++) {
+					if (x >= stepX * i && x <= stepX * (i + 1)
+							&& y >= stepY * j && y <= stepY * (j + 1))
+						if (map[i][FIELD_SIZE - j - 1] instanceof Empty)
+							map[i][FIELD_SIZE - j - 1] = new Unit(texture, map,
+									i, j);
+				}
+		}
 
 	}
 }
