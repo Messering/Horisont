@@ -1,7 +1,8 @@
-package com.mygdx.game;
+package com.mygdx.game.Wall_Empty;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Main.Cell;
 
 /**
  * Created by HP PAVILION on 10.06.2015.
@@ -13,7 +14,7 @@ public class Empty extends Cell {
         super(texture, new Color(1, 1, 1, 1));
     }
 
-    @Override
+    //@Override
     public void update(Cell[][] map, int x, int y, Texture texture) {
 
     }

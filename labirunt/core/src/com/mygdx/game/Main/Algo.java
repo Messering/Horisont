@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Main;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import java.awt.*;
+import com.mygdx.game.Main.Cell;
+import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Wall_Empty.Empty;
+import com.mygdx.game.Wall_Empty.Wall;
+import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 51;
@@ -18,8 +21,11 @@ public class Algo extends ApplicationAdapter {
 	SpriteBatch batch;
 	OrthographicCamera camera;
 	Texture texture;
+	Texture mob;
+	Rectangle player;
 
 	Cell[][] map;
+
 
 	public void create() {
 		batch = new SpriteBatch();
@@ -28,33 +34,71 @@ public class Algo extends ApplicationAdapter {
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
 
 
-		Texture texture2 = new Texture(Gdx.files.internal("br.jpg"));
+		Texture texture = new Texture(Gdx.files.internal("br.jpg"));
+		Texture mob = new Texture(Gdx.files.internal("mob.jpg"));
 
 		char[][] bmap = (new MazeGenerator()).getMaze(FIELD_SIZE - 1);
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
-					map[i][j] = new Empty(texture2);
+					map[i][j] = new Empty(texture);
 				if (bmap[i][j] == 1)
-					map[i][j] = new Wall(texture2);
+					map[i][j] = new Wall(texture);
 			}
 
+		/*player = new Rectangle();
+		player.x = 480 / 2 - 16 / 2;
+		player.y = 20;
+		player.width = 20;
+		player.height = 20;
+*/
 	}
 
+	@Override
 	public void render() {
 		this.update();
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		/*
+		batch.setProjectionMatrix(camera.combined);
+		camera.update();
+		batch.begin();
+		batch.draw(mob, player.x, player.y);
+		batch.end();*/
 
 		batch.setProjectionMatrix(camera.combined);
-
+		camera.update();
 		batch.begin();
+
 		for (int i = 0; i < FIELD_SIZE; i++)
-			for (int j = 0; j < FIELD_SIZE; j++)
+			for (int j = 0; j < FIELD_SIZE; j++){
 				map[i][j].draw(batch, i, j);
+			}
+
 		batch.end();
+
 	}
+
+	/*@Override
+	public void dispose() {
+
+		mob.dispose();
+		texture.dispose();
+		batch.dispose();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}*/
 
 	public void update() {
 

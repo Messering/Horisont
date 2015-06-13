@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Main;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,7 +30,7 @@ public abstract class Cell {
 
     public void draw(SpriteBatch batch,int x, int y){
 
-        sprite.setPosition(x-Algo.FIELD_SIZE/2-sprite.getWidth()/2, y-Algo.FIELD_SIZE/2-sprite.getHeight()/2);
+        sprite.setPosition(x- Algo.FIELD_SIZE/2-sprite.getWidth()/2, y-Algo.FIELD_SIZE/2-sprite.getHeight()/2);
         sprite.draw(batch);
     }
 }
