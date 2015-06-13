@@ -34,8 +34,8 @@ public class Algo extends ApplicationAdapter {
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
 
 
-		Texture texture = new Texture(Gdx.files.internal("br.jpg"));
-		Texture mob = new Texture(Gdx.files.internal("mob.jpg"));
+		Texture texture = new Texture(Gdx.files.internal("mob.jpg"));
+		//Texture mob = new Texture(Gdx.files.internal("mob.jpg"));
 
 		char[][] bmap = (new MazeGenerator()).getMaze(FIELD_SIZE - 1);
 		for (int i = 0; i < FIELD_SIZE; i++)
