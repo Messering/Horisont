@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="apk" name="Android">
+    <output-path>$PROJECT_DIR$/build/classes/artifacts/Android</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="keyStoreUrl" value="file://" />
+      </options>
+    </properties>
+    <root id="archive" name="Android.apk" />
+  </artifact>
+</component>

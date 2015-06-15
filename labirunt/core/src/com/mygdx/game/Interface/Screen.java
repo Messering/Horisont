@@ -1,10 +1,5 @@
 package com.mygdx.game.Interface;
 
-import com.badlogic.gdx.graphics.GL20;
-
-import static com.badlogic.gdx.Gdx.gl;
-import static com.badlogic.gdx.Gdx.input;
-
 /**
  * Created by HP PAVILION on 14.06.2015.
  */
