@@ -2,6 +2,7 @@ package com.mygdx.game.WorldGenerator.Recursive_Backtracking;
 
 /**
  * Created by HP PAVILION on 14.06.2015.
+ * це не рухаєм поки що не працюча реалізація алгоритму
  */
 public class Directions
 {

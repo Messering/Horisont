@@ -1,5 +1,5 @@
 package com.mygdx.game.Main;
-
+//це можна назвати мейном головною точкою входу нашого проекту , те саме як мейн в с++
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,42 +13,43 @@ import com.mygdx.game.Wall_Empty.Wall;
 import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 public class Algo extends ApplicationAdapter {
-	public static final int FIELD_SIZE = 51;
-	public static final float UPDATE_TIME = 0.0001f;
-
-	SpriteBatch batch;
+	public static final int FIELD_SIZE = 51; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
+	public static final float UPDATE_TIME = 0.0001f; /*швидкість обновлення лабіринут
+	, зараз застосовується при переміщенні камери
+        */
+	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
 	Texture texture;
 
-	Cell[][] map;
-
-	public void create() {
+	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
+	public void create() { //так це повинні знати головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
 
-		Texture texture = new Texture(Gdx.files.internal("mob.jpg"));
+		Texture texture = new Texture(Gdx.files.internal("mob.jpg")); //вантажимо текстуру, картинки знаходять в проекті андроїд
+		// папка асерт і мають на неї автоматичне посилання у всіх проектах
 
-		char[][] bmap = (new MazeGenerator()).getMaze(FIELD_SIZE - 1);
+		char[][] bmap = (new MazeGenerator()).getMaze(FIELD_SIZE - 1);//будуєм масив
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
-					map[i][j] = new Empty(texture);
+					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
 				if (bmap[i][j] == 1)
-					map[i][j] = new Wall(texture);
+					map[i][j] = new Wall(texture); //стіна
 			}
 	}
 
 	@Override
-	public void render() {
+	public void render() { //рендеремо
 		this.update();
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.setProjectionMatrix(camera.combined);
-		camera.update();
+		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
 
 		for (int i = 0; i < FIELD_SIZE; i++)
@@ -59,7 +60,7 @@ public class Algo extends ApplicationAdapter {
 		batch.end();
 
 	}
-	public void update() {
+	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
 
 		float a = UPDATE_TIME;
 		Input input = Gdx.input;

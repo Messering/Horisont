@@ -7,6 +7,8 @@ import static com.badlogic.gdx.Gdx.input;
 
 /**
  * Created by HP PAVILION on 14.06.2015.
+ * на це також не звертаєм уваги нігде поки не задіяно
+ * мало б бути для інтерфейсу(інтуїтивно по назві пакету))
  */
 public interface Screen {
     public void render(float delta);

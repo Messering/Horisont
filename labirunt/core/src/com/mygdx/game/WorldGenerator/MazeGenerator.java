@@ -3,6 +3,7 @@ package com.mygdx.game.WorldGenerator;
 /**
  * Created by HP PAVILION on 11.06.2015.
  * http://algolist.manual.ru/games/maze.php
+ * пробний алгоритм
  */
 import java.util.Random;
 

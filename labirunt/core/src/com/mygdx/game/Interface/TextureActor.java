@@ -2,6 +2,7 @@ package com.mygdx.game.Interface;
 
 /**
  * Created by HP PAVILION on 14.06.2015.
+ * інтерфейс не рухаєм бо він вийшов невдалим його будем накладати в кінці якщо буде час
  */
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
