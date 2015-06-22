@@ -30,15 +30,14 @@ public class Algo extends ApplicationAdapter {
 
 		Texture texture = new Texture(Gdx.files.internal("mob.jpg")); //вантажимо текстуру, картинки знаходять в проекті андроїд
 		// папка асерт і мають на неї автоматичне посилання у всіх проектах
-		/*{
-			com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] result = new Cell[FIELD_SIZE * FIELD_SIZE];
-			EllersAlgorithm algo = new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE);
-			for (int index = 0; index < FIELD_SIZE; index++) {
-				com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] row = algo.step(index);
-				for (int i = 0; i < FIELD_SIZE; i++){ result[index * FIELD_SIZE + i] = row[i];
 
-				};
-			}*/
+		com.mygdx.game.WorldGenerator.EllersAlgorithm.Cel[] result = new Cel[FIELD_SIZE * FIELD_SIZE];
+		EllersAlgorithm algo = new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE);
+		for (int index = 0; index < FIELD_SIZE; index++) {
+			com.mygdx.game.WorldGenerator.EllersAlgorithm.Cel[] row = algo.step(index);
+			for (int i = 0; i < FIELD_SIZE; i++) result[index * FIELD_SIZE + i] = row[i];
+
+		}
 
 
 		char[][] bmap = (new MazeGenerator()).getMaze(FIELD_SIZE - 1);//будуєм масив
@@ -49,10 +48,11 @@ public class Algo extends ApplicationAdapter {
 				if (bmap[i][j] == 1)
 					map[i][j] = new Wall(texture); //стіна
 			}
+
 	}
 
-	@Override
-	public void render() { //рендеремо
+	//@Override
+	public void render(){ //рендеремо
 		this.update();
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
