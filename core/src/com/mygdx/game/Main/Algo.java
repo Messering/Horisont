@@ -13,7 +13,7 @@ import com.mygdx.game.WorldGenerator.EllersAlgorithm.*;
 import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 public class Algo extends ApplicationAdapter {
-	public static final int FIELD_SIZE = 51; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
+	public static final int FIELD_SIZE = 102; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
 	public static final float UPDATE_TIME = 0.0001f; /*швидкість обновлення лабіринут
 	, зараз застосовується при переміщенні камери
         */
