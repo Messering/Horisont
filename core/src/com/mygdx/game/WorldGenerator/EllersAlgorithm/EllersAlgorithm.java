@@ -184,8 +184,8 @@ public class EllersAlgorithm {
             }
  ///ось туут пропишіть нормальне розсталвення нулів і одиниць і все компілите зразу
 //і краще реалізуйте ейллера це потужніший алгоритм
-        for(int s=0;s<w;s++){
-            for(int f=0;f<h;f++){
+        for(int s=0;s<w;s+=2){
+            for(int f=0;f<h;f+=2){
                 if("_ ".equals(gmap[s][f])){map[s][f]=0; map[s][f+1]=0; map[s+1][f]=1; map[s+1][f+1]=0; }
                 if(" |".equals(gmap[s][f])){map[s][f]=0; map[s][f+1]=1; map[s+1][f]=0; map[s+1][f+1]=1; }
                 if("  ".equals(gmap[s][f])){map[s][f]=0; map[s][f+1]=0; map[s+1][f]=0; map[s+1][f+1]=0; }
