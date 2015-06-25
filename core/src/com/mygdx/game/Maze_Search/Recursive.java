@@ -34,10 +34,12 @@ public class Recursive {
             {
                 return true;
             }
-            if (i>=1 && maze[i-1][j] == 0 && findPath(maze, i-1,j)){
+            if (i>=1 && maze[i-1][j] == 0 && findPath(maze, i-1,j))
+            {
                 return true;
             }
-            if(j>=1 && maze[i][j-1] == 0 && findPath(maze, i,j-1)){
+            if(j>=1 && maze[i][j-1] == 0 && findPath(maze, i,j-1))
+            {
                 return true;
             }
         }

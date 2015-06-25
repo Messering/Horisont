@@ -27,7 +27,7 @@ public class Algo extends ApplicationAdapter {
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 
-	public void create() { //так це повинні знати головний ініціалізатор входження
+	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 
@@ -41,27 +41,40 @@ public class Algo extends ApplicationAdapter {
 			for (int index = 0; index < FIELD_SIZE; index++) {
 				com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] row = algo.step(index);
 				for (int i = 0; i < FIELD_SIZE; i++){ result[index * FIELD_SIZE + i] = row[i];
-
 				};
 			}*/
-
-
 		int[][] bmap = (new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE)).generator();//будуєм масив
-
-
-
+		for (int i = 0; i < FIELD_SIZE; i++)
+		{
+			for (int j = 0; j < FIELD_SIZE; j++) {
+			System.out.print(bmap[i][j]);
+			}
+			System.out.println();
+		}
+	//MAP CREATING
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
 					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
 				if (bmap[i][j] == 1)
 					map[i][j] = new Wall(texture); //стіна
+				if (bmap[i][j] == 2)
+					map[i][j] = new Walk(texture);//Обхід лабіринту
 			}
+		//MAZE SEARCH
 		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
+
+		System.out.println();
+		for (int i = 0; i < FIELD_SIZE; i++) {
+			for (int j = 0; j < FIELD_SIZE; j++) {
+				System.out.print(bmap[i][j]);
+			}
+			System.out.println();
+		}
 	}
 	public void MazeSearch(int[][] bmap)
 	{
-		Recursive Search = new Recursive(bmap, 0, 0);
+		Recursive Search = new Recursive(bmap, 5, 0);
 		Search.InMazeSearch();
 	}
 	@Override
