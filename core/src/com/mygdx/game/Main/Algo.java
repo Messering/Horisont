@@ -30,7 +30,8 @@ public class Algo extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
-		Texture texture = new Texture(Gdx.files.internal("mob.jpg")); //вантажимо текстуру, картинки знаходять в проекті андроїд
+		Texture texture = new Texture(Gdx.files.internal("mob.jpg"));
+		Texture texture_1 = new Texture(Gdx.files.internal("way.jpg"));//вантажимо текстуру, картинки знаходять в проекті андроїд
 		// папка асерт і мають на неї автоматичне посилання у всіх проектах
 		/*{
 			com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] result = new Cell[FIELD_SIZE * FIELD_SIZE];
@@ -73,7 +74,7 @@ public class Algo extends ApplicationAdapter {
 				if (bmap[i][j] == 1)
 					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
 				if (bmap[i][j] == 2)
-					map[i][j] = new Walk(texture);//Обхід лабіринту
+					map[i][j] = new Walk(texture_1);//Обхід лабіринту
 			}
 		//MAZE SEARCH
 
