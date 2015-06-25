@@ -8,9 +8,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Maze_Search.Recursive;
 import com.mygdx.game.Wall_Empty.*;
 import com.mygdx.game.WorldGenerator.EllersAlgorithm.*;
 import com.mygdx.game.WorldGenerator.MazeGenerator;
+
+//In Maze Serching
+import com.mygdx.game.Maze_Search.Recursive;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 102; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
@@ -22,6 +26,7 @@ public class Algo extends ApplicationAdapter {
 	Texture texture;
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
+
 	public void create() { //так це повинні знати головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
@@ -42,6 +47,9 @@ public class Algo extends ApplicationAdapter {
 
 
 		int[][] bmap = (new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE)).generator();//будуєм масив
+
+
+
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
@@ -49,8 +57,13 @@ public class Algo extends ApplicationAdapter {
 				if (bmap[i][j] == 1)
 					map[i][j] = new Wall(texture); //стіна
 			}
+		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
 	}
-
+	public void MazeSearch(int[][] bmap)
+	{
+		Recursive Search = new Recursive(bmap, 0, 0);
+		Search.InMazeSearch();
+	}
 	@Override
 	public void render() { //рендеремо
 		this.update();
