@@ -17,7 +17,7 @@ import com.mygdx.game.WorldGenerator.MazeGenerator;
 import com.mygdx.game.Maze_Search.Recursive;
 
 public class Algo extends ApplicationAdapter {
-	public static final int FIELD_SIZE = 102; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
+	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
 	public static final float UPDATE_TIME = 0.0001f; /*швидкість обновлення лабіринут
 	, зараз застосовується при переміщенні камери
         */
@@ -26,13 +26,10 @@ public class Algo extends ApplicationAdapter {
 	Texture texture;
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
-
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
-
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
-
 		Texture texture = new Texture(Gdx.files.internal("mob.jpg")); //вантажимо текстуру, картинки знаходять в проекті андроїд
 		// папка асерт і мають на неї автоматичне посилання у всіх проектах
 		/*{
@@ -43,7 +40,21 @@ public class Algo extends ApplicationAdapter {
 				for (int i = 0; i < FIELD_SIZE; i++){ result[index * FIELD_SIZE + i] = row[i];
 				};
 			}*/
-		int[][] bmap = (new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE)).generator();//будуєм масив
+		//int[][] bmap = (new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE)).generator();//будуєм масив
+		int[][] bmap = {
+				{1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,0,1,0,0,0,1,0,0,0,0,0,1},
+				{1,0,1,0,1,0,1,0,1,0,1,0,1},
+				{1,0,1,0,1,1,1,0,1,0,1,1,1},
+				{0,0,0,0,0,0,0,0,1,0,0,0,1},
+				{1,0,1,1,1,1,1,0,1,1,1,1,1},
+				{1,0,0,0,0,0,1,0,0,0,0,0,1},
+				{1,1,0,1,1,1,1,1,0,1,0,1,1},
+				{1,1,0,0,0,0,0,1,0,1,0,1,1},
+				{1,0,1,1,0,1,0,0,0,0,1,1,1},
+				{1,0,0,1,0,1,0,1,1,0,0,0,1},
+				{1,1,0,0,0,0,0,0,1,0,1,0,1},
+				{1,1,1,1,1,1,1,1,1,0,1,1,1}};
 		for (int i = 0; i < FIELD_SIZE; i++)
 		{
 			for (int j = 0; j < FIELD_SIZE; j++) {
@@ -55,15 +66,14 @@ public class Algo extends ApplicationAdapter {
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
-					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
-				if (bmap[i][j] == 1)
 					map[i][j] = new Wall(texture); //стіна
+				if (bmap[i][j] == 1)
+					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
 				if (bmap[i][j] == 2)
 					map[i][j] = new Walk(texture);//Обхід лабіринту
 			}
 		//MAZE SEARCH
 		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
-
 		System.out.println();
 		for (int i = 0; i < FIELD_SIZE; i++) {
 			for (int j = 0; j < FIELD_SIZE; j++) {
@@ -74,27 +84,23 @@ public class Algo extends ApplicationAdapter {
 	}
 	public void MazeSearch(int[][] bmap)
 	{
-		Recursive Search = new Recursive(bmap, 5, 0);
+		Recursive Search = new Recursive(bmap, 4, 0);
 		Search.InMazeSearch();
 	}
 	@Override
 	public void render() { //рендеремо
 		this.update();
-
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.setProjectionMatrix(camera.combined);
 		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
-
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
 				map[i][j].draw(batch, i, j);
 			}
-
 		batch.end();
-
 	}
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
 
