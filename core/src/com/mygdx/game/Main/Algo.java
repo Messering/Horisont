@@ -62,6 +62,9 @@ public class Algo extends ApplicationAdapter {
 			}
 			System.out.println();
 		}
+
+		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
+
 	//MAP CREATING
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
@@ -73,7 +76,8 @@ public class Algo extends ApplicationAdapter {
 					map[i][j] = new Walk(texture);//Îáõ³ä ëàá³ðèíòó
 			}
 		//MAZE SEARCH
-		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
+
+
 		System.out.println();
 		for (int i = 0; i < FIELD_SIZE; i++) {
 			for (int j = 0; j < FIELD_SIZE; j++) {

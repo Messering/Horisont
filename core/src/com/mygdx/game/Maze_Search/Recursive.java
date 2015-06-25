@@ -26,7 +26,7 @@ public class Recursive {
         if (maze[i][j] == 0)
         {
             maze[i][j] = 2;
-            if(i == maze.length || j == maze.length) return true;
+            if(i == maze.length-1 || j == maze.length-1) return true;
             if ((i+1 < maze.length && maze[i+1][j] == 0 && findPath(maze, i+1, j)))
             {
                 return true;
