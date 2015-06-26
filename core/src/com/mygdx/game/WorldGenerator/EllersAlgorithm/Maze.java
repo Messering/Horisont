@@ -167,5 +167,4 @@ public class Maze {
        // maze.draw();
         maze.solve();
     }
-
 }
