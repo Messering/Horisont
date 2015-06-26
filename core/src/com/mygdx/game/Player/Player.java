@@ -14,7 +14,6 @@ public class Player {
         place=mass[h][w];
         mass[h][w]=9;
     }
-
     public void up()
     {
         if (h-1>=0) {
