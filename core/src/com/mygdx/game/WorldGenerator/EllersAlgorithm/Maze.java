@@ -154,8 +154,6 @@ public class Maze {
                 if (east[x][y])mass[x][y]+='e';
             }
         }
-        for (int x = 1; x <= N; x++) {
-            for (int y = 1; y <= N; y++) {System.out.print(mass[x][y]);}System.out.println();}
         return mass;
     }
 

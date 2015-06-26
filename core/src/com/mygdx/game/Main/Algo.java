@@ -46,12 +46,15 @@ public class Algo extends ApplicationAdapter {
         Texture t_we = new Texture(Gdx.files.internal("we.jpg"));
 
         Maze a=new Maze(FIELD_SIZE);
-        String [][] texture_map=new String[FIELD_SIZE+2][FIELD_SIZE+2];
+        String [][] texture_map;
         texture_map=a.mass();
+		MazeSearch(texture_map);
+		for (int x = 1; x <= FIELD_SIZE; x++) {
+			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
+
 
         for (int x = 1; x < FIELD_SIZE+1; x++) {
             for (int y = 1; y < FIELD_SIZE+1; y++) {
-                System.out.print(x); System.out.println(y);
                 if (texture_map[x][y].equals("_n"))map[x-1][y-1]=new Walk(t_n);
                 if (texture_map[x][y].equals("_e")){map[x-1][y-1]=new Walk(t_e); }
                 if (texture_map[x][y].equals("_ne")){map[x-1][y-1]=new Walk(t_ne); }
@@ -66,13 +69,26 @@ public class Algo extends ApplicationAdapter {
                 if (texture_map[x][y].equals("_swe")){map[x-1][y-1]=new Walk(t_swe); }
                 if (texture_map[x][y].equals("_w")){map[x-1][y-1]=new Walk(t_w); }
                 if (texture_map[x][y].equals("_we")){map[x-1][y-1]=new Walk(t_we); }
-                System.out.print("da");
+				if (texture_map[x][y].equals("_n1"))map[x-1][y-1]=new Wall(t_n);
+				if (texture_map[x][y].equals("_e1")){map[x-1][y-1]=new Wall(t_e); }
+				if (texture_map[x][y].equals("_ne1")){map[x-1][y-1]=new Wall(t_ne); }
+				if (texture_map[x][y].equals("_nw1")){map[x-1][y-1]=new Wall(t_nw); }
+				if (texture_map[x][y].equals("_nwe1")){map[x-1][y-1]=new Wall(t_nwe); }
+				if (texture_map[x][y].equals("_s1")){map[x-1][y-1]=new Wall(t_s); }
+				if (texture_map[x][y].equals("_se1")){map[x-1][y-1]=new Wall(t_se); }
+				if (texture_map[x][y].equals("_sn1")){map[x-1][y-1]=new Wall(t_sn); }
+				if (texture_map[x][y].equals("_sne1")){map[x-1][y-1]=new Wall(t_sne); }
+				if (texture_map[x][y].equals("_snw1")){map[x-1][y-1]=new Wall(t_snw); }
+				if (texture_map[x][y].equals("_sw1")){map[x-1][y-1]=new Wall(t_sw); }
+				if (texture_map[x][y].equals("_swe1")){map[x-1][y-1]=new Wall(t_swe); }
+				if (texture_map[x][y].equals("_w1")){map[x-1][y-1]=new Wall(t_w); }
+				if (texture_map[x][y].equals("_we1")){map[x-1][y-1]=new Wall(t_we); }
             }}
 
 	}
-	public void MazeSearch(int[][] bmap)
+	public void MazeSearch(String[][] texture_m)
 	{
-		Recursive Search = new Recursive(bmap, 4, 0);
+		Recursive Search = new Recursive(texture_m, 1, 1);
 		Search.InMazeSearch();
 	}
 	@Override
