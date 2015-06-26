@@ -22,6 +22,7 @@ public class Player {
         mass[h][w]=new Unit(texture_2);
         this.g=g;
     }
+
     public void up()
     {
         if (h-1>=0) {
