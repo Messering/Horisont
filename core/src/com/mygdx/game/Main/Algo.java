@@ -7,15 +7,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Maze_Search.Recursive;
-import com.mygdx.game.Wall_Empty.Empty;
-import com.mygdx.game.Wall_Empty.Unit;
-import com.mygdx.game.Wall_Empty.Walk;
-import com.mygdx.game.Wall_Empty.Wall;
+import com.mygdx.game.Wall_Empty.*;
+import com.mygdx.game.WorldGenerator.EllersAlgorithm.*;
+import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 //In Maze Serching
+import com.mygdx.game.Maze_Search.Recursive;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
@@ -25,82 +24,51 @@ public class Algo extends ApplicationAdapter {
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
 	Texture texture;
-	Rectangle player;
-	Texture texture_2;
-	Texture texture_1;
-
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
-		map = new Cell[FIELD_SIZE][FIELD_SIZE];
-		texture_2 = new Texture(Gdx.files.internal("title.jpg"));
-		texture = new Texture(Gdx.files.internal("mob.jpg"));
-		texture_1 = new Texture(Gdx.files.internal("way.jpg"));//вантажимо текстуру, картинки знаходять в проекті андроїд
-		// папка асерт і мають на неї автоматичне посилання у всіх проектах
-		/*{
-			com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] result = new Cell[FIELD_SIZE * FIELD_SIZE];
-			EllersAlgorithm algo = new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE);
-			for (int index = 0; index < FIELD_SIZE; index++) {
-				com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] row = algo.step(index);
-				for (int i = 0; i < FIELD_SIZE; i++){ result[index * FIELD_SIZE + i] = row[i];
-				};
-			}*/
-		//int[][] bmap = (new EllersAlgorithm(FIELD_SIZE, FIELD_SIZE)).generator();//будуєм масив
-		int[][] bmap = {
-				{1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,0,1,0,0,0,1,0,0,0,0,0,1},
-				{1,0,1,0,1,0,1,0,1,0,1,0,1},
-				{1,0,1,0,1,1,1,0,1,0,1,1,1},
-				{0,0,0,0,0,0,0,0,1,0,0,0,1},
-				{1,0,1,1,1,1,1,0,1,1,1,1,1},
-				{1,0,0,0,0,0,1,0,0,0,0,0,1},
-				{1,1,0,1,1,1,1,1,0,1,0,1,1},
-				{1,1,0,0,0,0,0,1,0,1,0,1,1},
-				{1,0,1,1,0,1,0,0,0,0,1,1,1},
-				{1,0,0,1,0,1,0,1,1,0,0,0,1},
-				{1,1,0,0,0,0,0,0,1,0,1,0,1},
-				{1,1,1,1,1,1,1,1,1,0,1,1,1}};
-		for (int i = 0; i < FIELD_SIZE; i++)
-		{
-			for (int j = 0; j < FIELD_SIZE; j++) {
-			System.out.print(bmap[i][j]);
-			}
-			System.out.println();
-		}
+		map = new Cell[FIELD_SIZE+1][FIELD_SIZE+1];
+		Texture t_e = new Texture(Gdx.files.internal("e.jpg"));
+        Texture t_n = new Texture(Gdx.files.internal("n.jpg"));
+        Texture t_ne = new Texture(Gdx.files.internal("ne.jpg"));
+        Texture t_nw = new Texture(Gdx.files.internal("nw.jpg"));
+        Texture t_nwe = new Texture(Gdx.files.internal("nwe.jpg"));
+        Texture t_s = new Texture(Gdx.files.internal("s.jpg"));
+        Texture t_se = new Texture(Gdx.files.internal("se.jpg"));
+        Texture t_sn = new Texture(Gdx.files.internal("sn.jpg"));
+        Texture t_sne = new Texture(Gdx.files.internal("sne.jpg"));
+        Texture t_snw = new Texture(Gdx.files.internal("snw.jpg"));
+        Texture t_sw = new Texture(Gdx.files.internal("sw.jpg"));
+        Texture t_swe = new Texture(Gdx.files.internal("swe.jpg"));
+        Texture t_w = new Texture(Gdx.files.internal("w.jpg"));
+        Texture t_we = new Texture(Gdx.files.internal("we.jpg"));
 
-		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
+        Maze a=new Maze(FIELD_SIZE);
+        String [][] texture_map=new String[FIELD_SIZE+2][FIELD_SIZE+2];
+        texture_map=a.mass();
 
-		// создается Rectangle для представления ведра
-		player = new Rectangle();
-		// центрируем ведро по горизонтали
-		player.x =  1;
-		// размещаем на 20 пикселей выше нижней границы экрана.
-		player.y = 1;
-		player.width = 4;
-		player.height =4;
+        for (int x = 1; x < FIELD_SIZE+1; x++) {
+            for (int y = 1; y < FIELD_SIZE+1; y++) {
+                System.out.print(x); System.out.println(y);
+                if (texture_map[x][y].equals("_n"))map[x-1][y-1]=new Walk(t_n);
+                if (texture_map[x][y].equals("_e")){map[x-1][y-1]=new Walk(t_e); }
+                if (texture_map[x][y].equals("_ne")){map[x-1][y-1]=new Walk(t_ne); }
+                if (texture_map[x][y].equals("_nw")){map[x-1][y-1]=new Walk(t_nw); }
+                if (texture_map[x][y].equals("_nwe")){map[x-1][y-1]=new Walk(t_nwe); }
+                if (texture_map[x][y].equals("_s")){map[x-1][y-1]=new Walk(t_s); }
+                if (texture_map[x][y].equals("_se")){map[x-1][y-1]=new Walk(t_se); }
+                if (texture_map[x][y].equals("_sn")){map[x-1][y-1]=new Walk(t_sn); }
+                if (texture_map[x][y].equals("_sne")){map[x-1][y-1]=new Walk(t_sne); }
+                if (texture_map[x][y].equals("_snw")){map[x-1][y-1]=new Walk(t_snw); }
+                if (texture_map[x][y].equals("_sw")){map[x-1][y-1]=new Walk(t_sw); }
+                if (texture_map[x][y].equals("_swe")){map[x-1][y-1]=new Walk(t_swe); }
+                if (texture_map[x][y].equals("_w")){map[x-1][y-1]=new Walk(t_w); }
+                if (texture_map[x][y].equals("_we")){map[x-1][y-1]=new Walk(t_we); }
+                System.out.print("da");
+            }}
 
-	//MAP CREATING
-		for (int i = 0; i < FIELD_SIZE; i++)
-			for (int j = 0; j < FIELD_SIZE; j++) {
-				if (bmap[i][j] == 0)
-					map[i][j] = new Wall(texture_2); //стіна
-				if (bmap[i][j] == 1)
-					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
-				if (bmap[i][j] == 2)
-					map[i][j] = new Walk(texture_1);//Обхід лабіринту
-			}
-		//MAZE SEARCH
-
-		map[4][0]=new Unit(texture_2);
-		System.out.println();
-		for (int i = 0; i < FIELD_SIZE; i++) {
-			for (int j = 0; j < FIELD_SIZE; j++) {
-				System.out.print(bmap[i][j]);
-			}
-			System.out.println();
-		}
 	}
 	public void MazeSearch(int[][] bmap)
 	{
@@ -114,13 +82,12 @@ public class Algo extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.setProjectionMatrix(camera.combined);
-
+		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
 				map[i][j].draw(batch, i, j);
 			}
-
 		batch.end();
 	}
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
@@ -134,7 +101,6 @@ public class Algo extends ApplicationAdapter {
 
 		if(input.isKeyPressed(Input.Keys.W))
 			camera.zoom-=Gdx.graphics.getDeltaTime();
-
 		if(input.isKeyPressed(Input.Keys.S))
 			camera.zoom+=Gdx.graphics.getDeltaTime();
 
@@ -162,8 +128,6 @@ public class Algo extends ApplicationAdapter {
 		}
 
 		camera.update();
-		if(input.isKeyPressed(Input.Keys.L))
-		{map[4][1]=new Unit(texture_2); map[4][0]=new Empty(texture_2);}
 
 	}
 }

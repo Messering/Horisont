@@ -9,7 +9,7 @@ import com.mygdx.game.Main.Cell;
  */
 public class Walk extends Cell{
     public Walk(Texture texture) {
-        super(texture, new Color(1f, 0f, 0f, 1));
+        super(texture, new Color(1, 0, 1, 1));
     }
 
     //@Override

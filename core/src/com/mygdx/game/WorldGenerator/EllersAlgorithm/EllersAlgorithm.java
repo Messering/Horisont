@@ -4,7 +4,6 @@ package com.mygdx.game.WorldGenerator.EllersAlgorithm;
  * Created by HP PAVILION on 20.06.2015.
  */
 import com.mygdx.game.Main.Algo;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
