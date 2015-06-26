@@ -7,15 +7,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Maze_Search.Recursive;
-import com.mygdx.game.Wall_Empty.Empty;
-import com.mygdx.game.Wall_Empty.Unit;
-import com.mygdx.game.Wall_Empty.Walk;
-import com.mygdx.game.Wall_Empty.Wall;
+import com.mygdx.game.Wall_Empty.*;
+import com.mygdx.game.WorldGenerator.EllersAlgorithm.*;
+import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 //In Maze Serching
+import com.mygdx.game.Maze_Search.Recursive;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
@@ -25,19 +24,14 @@ public class Algo extends ApplicationAdapter {
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
 	Texture texture;
-	Rectangle player;
-	Texture texture_2;
-	Texture texture_1;
-
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
-		texture_2 = new Texture(Gdx.files.internal("title.jpg"));
-		texture = new Texture(Gdx.files.internal("mob.jpg"));
-		texture_1 = new Texture(Gdx.files.internal("way.jpg"));//вантажимо текстуру, картинки знаходять в проекті андроїд
+		Texture texture = new Texture(Gdx.files.internal("mob.jpg"));
+		Texture texture_1 = new Texture(Gdx.files.internal("way.jpg"));//вантажимо текстуру, картинки знаходять в проекті андроїд
 		// папка асерт і мають на неї автоматичне посилання у всіх проектах
 		/*{
 			com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] result = new Cell[FIELD_SIZE * FIELD_SIZE];
@@ -72,20 +66,11 @@ public class Algo extends ApplicationAdapter {
 
 		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
 
-		// создается Rectangle для представления ведра
-		player = new Rectangle();
-		// центрируем ведро по горизонтали
-		player.x =  1;
-		// размещаем на 20 пикселей выше нижней границы экрана.
-		player.y = 1;
-		player.width = 4;
-		player.height =4;
-
 	//MAP CREATING
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
-					map[i][j] = new Wall(texture_2); //стіна
+					map[i][j] = new Wall(texture); //стіна
 				if (bmap[i][j] == 1)
 					map[i][j] = new Empty(texture);//нуль прохід(клас емпті з пакету вол-емпті
 				if (bmap[i][j] == 2)
@@ -93,7 +78,7 @@ public class Algo extends ApplicationAdapter {
 			}
 		//MAZE SEARCH
 
-		map[4][0]=new Unit(texture_2);
+
 		System.out.println();
 		for (int i = 0; i < FIELD_SIZE; i++) {
 			for (int j = 0; j < FIELD_SIZE; j++) {
@@ -114,13 +99,12 @@ public class Algo extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.setProjectionMatrix(camera.combined);
-
+		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
 				map[i][j].draw(batch, i, j);
 			}
-
 		batch.end();
 	}
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
@@ -134,7 +118,6 @@ public class Algo extends ApplicationAdapter {
 
 		if(input.isKeyPressed(Input.Keys.W))
 			camera.zoom-=Gdx.graphics.getDeltaTime();
-
 		if(input.isKeyPressed(Input.Keys.S))
 			camera.zoom+=Gdx.graphics.getDeltaTime();
 
@@ -162,8 +145,6 @@ public class Algo extends ApplicationAdapter {
 		}
 
 		camera.update();
-		if(input.isKeyPressed(Input.Keys.L))
-		{map[4][1]=new Unit(texture_2); map[4][0]=new Empty(texture_2);}
 
 	}
 }
