@@ -9,12 +9,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Maze_Search.Recursive;
+<<<<<<< HEAD
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Wall_Empty.Empty;
 import com.mygdx.game.Wall_Empty.Walk;
 import com.mygdx.game.Wall_Empty.Wall;
+=======
+import com.mygdx.game.Wall_Empty.*;
+import com.mygdx.game.WorldGenerator.EllersAlgorithm.*;
+import com.mygdx.game.WorldGenerator.MazeGenerator;
+>>>>>>> origin/Messering
 
 //In Maze Serching
+import com.mygdx.game.Maze_Search.Recursive;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
@@ -24,10 +31,13 @@ public class Algo extends ApplicationAdapter {
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
 	Texture texture;
+<<<<<<< HEAD
 	Texture texture_1;
 	Player un;
 	int[][] bmap;
 
+=======
+>>>>>>> origin/Messering
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 
@@ -35,8 +45,13 @@ public class Algo extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
+<<<<<<< HEAD
 		texture = new Texture(Gdx.files.internal("mob.jpg"));
 		texture_1 = new Texture(Gdx.files.internal("way.jpg"));//вантажимо текстуру, картинки знаходять в проекті андроїд
+=======
+		Texture texture = new Texture(Gdx.files.internal("mob.jpg"));
+		Texture texture_1 = new Texture(Gdx.files.internal("way.jpg"));//вантажимо текстуру, картинки знаходять в проекті андроїд
+>>>>>>> origin/Messering
 		// папка асерт і мають на неї автоматичне посилання у всіх проектах
 		/*{
 			com.mygdx.game.WorldGenerator.EllersAlgorithm.Cell[] result = new Cell[FIELD_SIZE * FIELD_SIZE];
@@ -70,8 +85,12 @@ public class Algo extends ApplicationAdapter {
 
 		MazeSearch(bmap);//In Maze searching & changing bmap drawing paths
 
+<<<<<<< HEAD
 
 		//MAP CREATING
+=======
+	//MAP CREATING
+>>>>>>> origin/Messering
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				if (bmap[i][j] == 0)
@@ -84,6 +103,10 @@ public class Algo extends ApplicationAdapter {
 		//MAZE SEARCH
 		un = new Player(bmap,map, 4, 0);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Messering
 		System.out.println();
 		for (int i = 0; i < FIELD_SIZE; i++) {
 			for (int j = 0; j < FIELD_SIZE; j++) {
@@ -105,13 +128,12 @@ public class Algo extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.setProjectionMatrix(camera.combined);
-
+		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
 		for (int i = 0; i < FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++) {
 				map[i][j].draw(batch, i, j);
 			}
-
 		batch.end();
 	}
 
@@ -126,7 +148,6 @@ public class Algo extends ApplicationAdapter {
 
 		/*if(input.isKeyPressed(Input.Keys.W))
 			camera.zoom-=Gdx.graphics.getDeltaTime();
-
 		if(input.isKeyPressed(Input.Keys.S))
 			camera.zoom+=Gdx.graphics.getDeltaTime();*/
 
@@ -167,6 +188,10 @@ public class Algo extends ApplicationAdapter {
 			un.left();
 		}
 
+<<<<<<< HEAD
+=======
+		camera.update();
+>>>>>>> origin/Messering
 
 		camera.update();
 			}
