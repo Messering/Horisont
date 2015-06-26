@@ -44,6 +44,7 @@ public class Algo extends ApplicationAdapter {
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
+<<<<<<< HEAD
 		map = new Cell[FIELD_SIZE][FIELD_SIZE];
 <<<<<<< HEAD
 		texture = new Texture(Gdx.files.internal("mob.jpg"));
@@ -114,6 +115,48 @@ public class Algo extends ApplicationAdapter {
 			}
 			System.out.println();
 		}
+=======
+		map = new Cell[FIELD_SIZE+1][FIELD_SIZE+1];
+		Texture t_e = new Texture(Gdx.files.internal("e.jpg"));
+        Texture t_n = new Texture(Gdx.files.internal("n.jpg"));
+        Texture t_ne = new Texture(Gdx.files.internal("ne.jpg"));
+        Texture t_nw = new Texture(Gdx.files.internal("nw.jpg"));
+        Texture t_nwe = new Texture(Gdx.files.internal("nwe.jpg"));
+        Texture t_s = new Texture(Gdx.files.internal("s.jpg"));
+        Texture t_se = new Texture(Gdx.files.internal("se.jpg"));
+        Texture t_sn = new Texture(Gdx.files.internal("sn.jpg"));
+        Texture t_sne = new Texture(Gdx.files.internal("sne.jpg"));
+        Texture t_snw = new Texture(Gdx.files.internal("snw.jpg"));
+        Texture t_sw = new Texture(Gdx.files.internal("sw.jpg"));
+        Texture t_swe = new Texture(Gdx.files.internal("swe.jpg"));
+        Texture t_w = new Texture(Gdx.files.internal("w.jpg"));
+        Texture t_we = new Texture(Gdx.files.internal("we.jpg"));
+
+        Maze a=new Maze(FIELD_SIZE);
+        String [][] texture_map=new String[FIELD_SIZE+2][FIELD_SIZE+2];
+        texture_map=a.mass();
+
+        for (int x = 1; x < FIELD_SIZE+1; x++) {
+            for (int y = 1; y < FIELD_SIZE+1; y++) {
+                System.out.print(x); System.out.println(y);
+                if (texture_map[x][y].equals("_n"))map[x-1][y-1]=new Walk(t_n);
+                if (texture_map[x][y].equals("_e")){map[x-1][y-1]=new Walk(t_e); }
+                if (texture_map[x][y].equals("_ne")){map[x-1][y-1]=new Walk(t_ne); }
+                if (texture_map[x][y].equals("_nw")){map[x-1][y-1]=new Walk(t_nw); }
+                if (texture_map[x][y].equals("_nwe")){map[x-1][y-1]=new Walk(t_nwe); }
+                if (texture_map[x][y].equals("_s")){map[x-1][y-1]=new Walk(t_s); }
+                if (texture_map[x][y].equals("_se")){map[x-1][y-1]=new Walk(t_se); }
+                if (texture_map[x][y].equals("_sn")){map[x-1][y-1]=new Walk(t_sn); }
+                if (texture_map[x][y].equals("_sne")){map[x-1][y-1]=new Walk(t_sne); }
+                if (texture_map[x][y].equals("_snw")){map[x-1][y-1]=new Walk(t_snw); }
+                if (texture_map[x][y].equals("_sw")){map[x-1][y-1]=new Walk(t_sw); }
+                if (texture_map[x][y].equals("_swe")){map[x-1][y-1]=new Walk(t_swe); }
+                if (texture_map[x][y].equals("_w")){map[x-1][y-1]=new Walk(t_w); }
+                if (texture_map[x][y].equals("_we")){map[x-1][y-1]=new Walk(t_we); }
+                System.out.print("da");
+            }}
+
+>>>>>>> origin/Messering
 	}
 
 	public void MazeSearch(int[][] bmap) {
