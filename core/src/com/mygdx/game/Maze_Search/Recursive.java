@@ -27,7 +27,7 @@ public class Recursive {
     private boolean findPath(String[][] maze, int i, int j)
     {
             maze[i][j] +='1';
-            if(i == maze.length-2 || j == maze.length-2) return true;
+                if(i == maze.length-2 || j == maze.length-2) return true;
             if (i+1 < maze.length-1 &&!maze[i][j].contains("e")&&jl!=1){jl=0; if(findPath(maze, i+1, j))
             {
                 return true;
