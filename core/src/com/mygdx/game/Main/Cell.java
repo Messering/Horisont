@@ -21,6 +21,8 @@ public abstract class Cell {
         sprite.setSize(1, 1);
     }
 
+    public abstract void update(Cell[][] map, int x, int y, Texture texture);
+
     public void setColor(Color color){
         this.color = color;
         sprite.setColor(color);

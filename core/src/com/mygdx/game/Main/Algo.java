@@ -48,10 +48,9 @@ public class Algo extends ApplicationAdapter {
         Maze a=new Maze(FIELD_SIZE);
         String [][] texture_map;
         texture_map=a.mass();
-
-	//	MazeSearch(texture_map);
-		for (int x = 0; x <= FIELD_SIZE; x++) {
-			for (int y = 0; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
+		MazeSearch(texture_map);
+		for (int x = 1; x <= FIELD_SIZE; x++) {
+			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
 
 
         for (int x = 1; x < FIELD_SIZE+1; x++) {
@@ -109,9 +108,12 @@ public class Algo extends ApplicationAdapter {
 	}
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
 
-		float a;
+		float a = UPDATE_TIME;
 		Input input = Gdx.input;
 
+		for (int i = 0; i < FIELD_SIZE; i++)
+			for (int j = 0; j < FIELD_SIZE; j++)
+				map[i][j].update(map, i, j, texture);
 
 		if(input.isKeyPressed(Input.Keys.W))
 			camera.zoom-=Gdx.graphics.getDeltaTime();
