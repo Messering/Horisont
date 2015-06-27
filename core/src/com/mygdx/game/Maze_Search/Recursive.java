@@ -6,6 +6,8 @@ package com.mygdx.game.Maze_Search;
  */
 import com.mygdx.game.Main.Algo;
 
+import java.net.SocketPermission;
+
 public class Recursive {
 
     private int h,w;
@@ -15,7 +17,6 @@ public class Recursive {
     public Recursive(String[][] m, final int hi, final int we){
         this.h = hi; this.w = we;
         maze = m;
-
     }
     public void InMazeSearch()
     {
@@ -27,15 +28,21 @@ public class Recursive {
     private boolean findPath(String[][] maze, int i, int j)
     {
             maze[i][j] +='1';
-            if(i == maze.length-2 || j == maze.length-2) return true;
-            if (i+1 < maze.length-1 &&!maze[i][j].contains("e")&&jl!=1){jl=0; if(findPath(maze, i+1, j))
-            {
+        System.out.println("i = " + i + ", j = " + j);
+          //  if(i == maze.length-2 || j == maze.length-2) return true;
+            if(i == 13 && j == 8) {
+                System.out.println("point reached!");
                 return true;
-            }}
-            if ((j+1 < maze[i].length-1)&&!maze[i][j].contains("n")&&jl!=2){jl=3;if(findPath(maze, i, j+1))
-            {
+            }
+            if (i+1 < maze.length-1 && !maze[i][j].contains("e") && jl!=1){
+                jl=0;
+                if(findPath(maze, i+1, j))
                 return true;
-            }}
+            }
+            if ((j+1 < maze[i].length-1)&&!maze[i][j].contains("n")&&jl!=2){jl=3;
+                if(findPath(maze, i, j+1))
+                return true;
+            }
             if(j>=1&&!maze[i][j].contains("s")&&jl!=3){jl=2;if( findPath(maze, i,j-1))
             {
             return true;
