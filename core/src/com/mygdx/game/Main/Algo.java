@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Maze_Search.Recursive;
+import com.mygdx.game.Maze_Search.RightHandedRule;
 import com.mygdx.game.Wall_Empty.*;
 import com.mygdx.game.WorldGenerator.EllersAlgorithm.*;
 import com.mygdx.game.WorldGenerator.MazeGenerator;
@@ -88,8 +89,10 @@ public class Algo extends ApplicationAdapter {
 	}
 	public void MazeSearch(String[][] texture_m)
 	{
-		Recursive Search = new Recursive(texture_m, 1, 1);
-		Search.InMazeSearch();
+// Recursive RecursiveSearch = new Recursive(texture_m, 1, 1);
+		RightHandedRule RightHandedSearch = new RightHandedRule(texture_m, 1, 1);
+// RecursiveSearch.InMazeSearch();
+		RightHandedSearch.InMazeSearch();
 	}
 	@Override
 	public void render() { //рендеремо
@@ -100,8 +103,10 @@ public class Algo extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
-		for (int i = 0; i < FIELD_SIZE; i++)
+		for (int i = 0; i <FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
+				System.out.print(j);
+				System.out.println(i);
 				map[i][j].draw(batch, i, j);
 			}
 		batch.end();
@@ -111,9 +116,6 @@ public class Algo extends ApplicationAdapter {
 		float a = UPDATE_TIME;
 		Input input = Gdx.input;
 
-		for (int i = 0; i < FIELD_SIZE; i++)
-			for (int j = 0; j < FIELD_SIZE; j++)
-				map[i][j].update(map, i, j, texture);
 
 		if(input.isKeyPressed(Input.Keys.W))
 			camera.zoom-=Gdx.graphics.getDeltaTime();
