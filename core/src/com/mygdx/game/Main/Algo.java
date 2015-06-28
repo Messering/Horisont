@@ -16,6 +16,7 @@ import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 //In Maze Serching
 import com.mygdx.game.Maze_Search.Recursive;
+import com.mygdx.game.WorldGenerator.MyMaz;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
@@ -25,12 +26,14 @@ public class Algo extends ApplicationAdapter {
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
 	Texture texture;
-
+	int[][] bmap;
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE+1][FIELD_SIZE+1];
+		bmap = new int[FIELD_SIZE][FIELD_SIZE];
+		texture =new Texture(Gdx.files.internal("a.jpg"));
 		Texture t_e = new Texture(Gdx.files.internal("e.jpg"));
         Texture t_n = new Texture(Gdx.files.internal("n.jpg"));
         Texture t_ne = new Texture(Gdx.files.internal("ne.jpg"));
@@ -46,15 +49,31 @@ public class Algo extends ApplicationAdapter {
         Texture t_w = new Texture(Gdx.files.internal("w.jpg"));
         Texture t_we = new Texture(Gdx.files.internal("we.jpg"));
 
-        Maze a=new Maze(FIELD_SIZE);
+       /* Maze a=new Maze(FIELD_SIZE);
         String [][] texture_map;
         texture_map=a.mass();
 		MazeSearch(texture_map);
 		for (int x = 1; x <= FIELD_SIZE; x++) {
-			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
+			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}*/
 
+		bmap=(new MyMaz(FIELD_SIZE,FIELD_SIZE).gen(FIELD_SIZE,FIELD_SIZE));
+		for (int i = 0; i < FIELD_SIZE*2+1; i++) {
+			for (int j = 0; j < FIELD_SIZE * 2 + 1; j++) {
+				System.out.print(bmap[i][j]);
 
-        for (int x = 1; x < FIELD_SIZE+1; x++) {
+			}
+			System.out.print("\n");
+		}
+		for (int i = 0; i < FIELD_SIZE*2+1; i++)
+			for (int j = 0; j < FIELD_SIZE * 2 + 1; j++) {
+				if (bmap[i][j] == 1) {
+					map[i][j] = new Wall(texture);
+				}
+				if (bmap[i][j] == 0) {
+					map[i][j] = new Empty(texture);
+				}
+			}
+      /*  for (int x = 1; x < FIELD_SIZE+1; x++) {
             for (int y = 1; y < FIELD_SIZE+1; y++) {
                 if (texture_map[x][y].equals("_n"))map[x-1][y-1]=new Walk(t_n);
                 if (texture_map[x][y].equals("_e")){map[x-1][y-1]=new Walk(t_e); }
@@ -84,7 +103,7 @@ public class Algo extends ApplicationAdapter {
 				if (texture_map[x][y].equals("_swe1")){map[x-1][y-1]=new Wall(t_swe); }
 				if (texture_map[x][y].equals("_w1")){map[x-1][y-1]=new Wall(t_w); }
 				if (texture_map[x][y].equals("_we1")){map[x-1][y-1]=new Wall(t_we); }
-            }}
+            }}*/
 
 	}
 	public void MazeSearch(String[][] texture_m)
@@ -103,12 +122,13 @@ public class Algo extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
-		for (int i = 0; i <FIELD_SIZE; i++)
-			for (int j = 0; j < FIELD_SIZE; j++){
-				System.out.print(j);
-				System.out.println(i);
+		for (int i = 0; i <FIELD_SIZE; i++) {
+			for (int j = 0; j < FIELD_SIZE; j++) {
+				//System.out.print(j);
+				//System.out.println(i);
 				map[i][j].draw(batch, i, j);
 			}
+		}
 		batch.end();
 	}
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
