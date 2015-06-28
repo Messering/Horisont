@@ -11,7 +11,7 @@ import com.mygdx.game.Main.Cell;
 public class Wall extends Cell {
 
     public Wall(Texture texture) {
-        super(texture, new Color(1f, 0f, 0f, 1));
+        super(texture, new Color(1f, 1f, 1f, 1));
     }
 
     //@Override

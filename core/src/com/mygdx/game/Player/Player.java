@@ -10,80 +10,36 @@ import com.mygdx.game.Wall_Empty.Unit;
  */
 public class Player {
     private int h,w;
-    private int[][]g;
-    Texture texture_2 = new Texture(Gdx.files.internal("title.jpg"));
-    private Cell[][] mass;
-    private Cell place;
-    public Player(int [][]g,Cell[][] m, final int hi, final int we) {
-        this.h = hi;
-        this.w = we;
+    String[][]mass;
+    public Player(String[][] m,final int x,final int y, final int hi, final int we) {
+        h = hi;
+        w = we;
+        mass = new String[x][y];
         mass = m;
-        place=mass[h][w];
-        mass[h][w]=new Unit(texture_2);
-        this.g=g;
+        mass[h][w] += "p";
     }
-
+    public String removeChar(String s, char c) {
+        String r = "";
+        for (int i = 0; i < s.length(); i ++) {
+            if (s.charAt(i) != c) r += s.charAt(i);
+        }
+        return r;
+    }
+    public String[][] mapp(){return mass;}
     public void up()
     {
-        if (h-1>=0) {
-            if (g[h - 1][w] != 1) {
-                mass[h][w] = this.place;
-                this.place = mass[h - 1][w];
-                mass[h - 1][w] = new Unit(texture_2);
-                h -= 1;
-            }
-        }
-
+        if (!mass[h][w].contains("n")){mass[h][w]=removeChar(mass[h][w],'p');w++;mass[h][w]+="p";}
     }
     public void down()
     {
-        if (h+1<=mass.length) {
-            if (g[h + 1][w] != 1) {
-                mass[h][w] = this.place;
-                this.place = mass[h + 1][w];
-                mass[h + 1][w] = new Unit(texture_2);
-                h += 1;
-            }
-            for (int i=0;i<mass.length;i++) {
-                for (int j = 0; j < mass.length; j++) {
-                    System.out.print(mass[i][j]);
-                }
-                System.out.println();
-            }
-        }
+        if (!mass[h][w].contains("s")){mass[h][w]=removeChar(mass[h][w],'p');w--;mass[h][w]+="p";}
     }
     public void right()
     {
-        if (w+1<=mass.length) {
-            if (g[h][w + 1] != 1) {
-                mass[h][w] = this.place;
-                this.place = mass[h][w + 1];
-                mass[h][w + 1] = new Unit(texture_2);
-                w += 1;
-            }
-            for (int i=0;i<mass.length;i++) {
-                for (int j = 0; j < mass.length; j++) {
-                    System.out.print(mass[i][j]);
-                }
-                System.out.println();
-            }
-        }
+        if (!mass[h][w].contains("e")){mass[h][w]=removeChar(mass[h][w],'p');h++;mass[h][w]+="p";}
     }
     public void left()
     {
-        if(w-1>=0) {
-            if (g[h][w - 1] != 1) {
-                mass[h][w] = this.place;
-                this.place = mass[h][w - 1];
-                mass[h][w - 1] = new Unit(texture_2);
-                w -= 1;
-            }
-            for (int i=0;i<mass.length;i++) {
-                for (int j = 0; j < mass.length; j++) {
-                    System.out.print(mass[i][j]);
-                }
-                System.out.println();
-            }
-        }
+        if (!mass[h][w].contains("w")){mass[h][w]=removeChar(mass[h][w],'p');h--;mass[h][w]+="p";}
     }
 }
