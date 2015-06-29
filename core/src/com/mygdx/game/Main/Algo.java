@@ -27,6 +27,9 @@ public class Algo extends ApplicationAdapter {
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
 	Texture play;
+	Cell players;
+	int play_x=0;
+	int play_y=0;
 	Player player;
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
@@ -34,6 +37,7 @@ public class Algo extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE+1][FIELD_SIZE+1];
+
 
         Maze a=new Maze(FIELD_SIZE);
 
@@ -44,65 +48,65 @@ public class Algo extends ApplicationAdapter {
 			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
 	}
 	public void textures() {
-		play=new Texture(Gdx.files.internal("aplayer.jpg"));
-		Texture t_e = new Texture(Gdx.files.internal("e.jpg"));
-		Texture t_n = new Texture(Gdx.files.internal("n.jpg"));
-		Texture t_ne = new Texture(Gdx.files.internal("ne.jpg"));
-		Texture t_nw = new Texture(Gdx.files.internal("nw.jpg"));
-		Texture t_nwe = new Texture(Gdx.files.internal("nwe.jpg"));
-		Texture t_s = new Texture(Gdx.files.internal("s.jpg"));
-		Texture t_se = new Texture(Gdx.files.internal("se.jpg"));
-		Texture t_sn = new Texture(Gdx.files.internal("sn.jpg"));
-		Texture t_sne = new Texture(Gdx.files.internal("sne.jpg"));
-		Texture t_snw = new Texture(Gdx.files.internal("snw.jpg"));
-		Texture t_sw = new Texture(Gdx.files.internal("sw.jpg"));
-		Texture t_swe = new Texture(Gdx.files.internal("swe.jpg"));
-		Texture t_w = new Texture(Gdx.files.internal("w.jpg"));
-		Texture t_we = new Texture(Gdx.files.internal("we.jpg"));
+		play=new Texture(Gdx.files.internal("aplayer.png"));
+		Texture t_e = new Texture(Gdx.files.internal("e.png"));
+		Texture t_n = new Texture(Gdx.files.internal("n.png"));
+		Texture t_ne = new Texture(Gdx.files.internal("ne.png"));
+		Texture t_nw = new Texture(Gdx.files.internal("nw.png"));
+		Texture t_nwe = new Texture(Gdx.files.internal("nwe.png"));
+		Texture t_s = new Texture(Gdx.files.internal("s.png"));
+		Texture t_se = new Texture(Gdx.files.internal("se.png"));
+		Texture t_sn = new Texture(Gdx.files.internal("sn.png"));
+		Texture t_sne = new Texture(Gdx.files.internal("sne.png"));
+		Texture t_snw = new Texture(Gdx.files.internal("snw.png"));
+		Texture t_sw = new Texture(Gdx.files.internal("sw.png"));
+		Texture t_swe = new Texture(Gdx.files.internal("swe.png"));
+		Texture t_w = new Texture(Gdx.files.internal("w.png"));
+		Texture t_we = new Texture(Gdx.files.internal("we.png"));
 
 		for (int x = 1; x < FIELD_SIZE + 1; x++) {//System.out.println();
 			for (int y = 1; y < FIELD_SIZE + 1; y++) {
 				//System.out.print(texture_map[x][y]);
-				if (texture_map[x][y].equals("_n")) {
+				if (texture_map[x][y].equals("_n")||texture_map[x][y].equals("_np")) {
 					map[x - 1][y - 1] = new Walk(t_n);}
 
-				if (texture_map[x][y].equals("_e")) {
+				if (texture_map[x][y].equals("_e")||texture_map[x][y].equals("_ep")) {
 					map[x - 1][y - 1] = new Walk(t_e);
 				}
-				if (texture_map[x][y].equals("_ne")) {
+				if (texture_map[x][y].equals("_ne")||texture_map[x][y].equals("_nep")) {
 					map[x - 1][y - 1] = new Walk(t_ne);
 				}
-				if (texture_map[x][y].equals("_nw")) {
+				if (texture_map[x][y].equals("_nw")||texture_map[x][y].equals("_nwp")) {
 					map[x - 1][y - 1] = new Walk(t_nw);
 				}
-				if (texture_map[x][y].equals("_nwe")) {
+				if (texture_map[x][y].equals("_nwe")||texture_map[x][y].equals("_nwe")) {
 					map[x - 1][y - 1] = new Walk(t_nwe);
 				}
-				if (texture_map[x][y].equals("_s")) {
+				if (texture_map[x][y].equals("_s")||texture_map[x][y].equals("_sp")) {
 					map[x - 1][y - 1] = new Walk(t_s);
 				}
-				if (texture_map[x][y].equals("_se")) {
+				if (texture_map[x][y].equals("_se")||texture_map[x][y].equals("_sep")) {
 					map[x - 1][y - 1] = new Walk(t_se);
 				}
-				if (texture_map[x][y].equals("_sn")) {
+				if (texture_map[x][y].equals("_sn")||texture_map[x][y].equals("_snp")) {
 					map[x - 1][y - 1] = new Walk(t_sn);
 				}
-				if (texture_map[x][y].equals("_sne")) {
+				if (texture_map[x][y].equals("_sne")||texture_map[x][y].equals("_snep")) {
 					map[x - 1][y - 1] = new Walk(t_sne);
 				}
-				if (texture_map[x][y].equals("_snw")) {
+				if (texture_map[x][y].equals("_snw")||texture_map[x][y].equals("_snwp")) {
 					map[x - 1][y - 1] = new Walk(t_snw);
 				}
-				if (texture_map[x][y].equals("_sw")) {
+				if (texture_map[x][y].equals("_sw")||texture_map[x][y].equals("_swp")) {
 					map[x - 1][y - 1] = new Walk(t_sw);
 				}
-				if (texture_map[x][y].equals("_swe")) {
+				if (texture_map[x][y].equals("_swe")||texture_map[x][y].equals("_swep")) {
 					map[x - 1][y - 1] = new Walk(t_swe);
 				}
-				if (texture_map[x][y].equals("_w")) {
+				if (texture_map[x][y].equals("_w")||texture_map[x][y].equals("_wp")) {
 					map[x - 1][y - 1] = new Walk(t_w);
 				}
-				if (texture_map[x][y].equals("_we")) {
+				if (texture_map[x][y].equals("_we")||texture_map[x][y].equals("_wep")) {
 					map[x - 1][y - 1] = new Walk(t_we);
 				}
 				if (texture_map[x][y].equals("_n1")) {
@@ -147,7 +151,9 @@ public class Algo extends ApplicationAdapter {
 					map[x - 1][y - 1] = new Wall(t_we);
 				}
 				if (texture_map[x][y].contains("p")) {
-					map[x - 1][y - 1] = new Wall(play);
+					play_x=x-1;
+					play_y=y-1;
+					players=new Wall(play);
 				}
 			}
 		}
@@ -162,7 +168,7 @@ public class Algo extends ApplicationAdapter {
 	@Override
 	public void render() { //рендеремо
 		this.update();
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		texture_map=player.mapp();
 		textures();
@@ -171,33 +177,33 @@ public class Algo extends ApplicationAdapter {
 		batch.begin();
 		for (int i = 0; i <FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
+				if (i==play_x&&j==play_y){batch.enableBlending();players.draw(batch,i,j);map[i][j].draw(batch, i, j);}else
 				map[i][j].draw(batch, i, j);
 			}
 		batch.end();
 	}
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
 
-		float a = UPDATE_TIME;
 		Input input = Gdx.input;
 
-
-		if(input.isKeyPressed(Input.Keys.W))
+		if(input.isKeyPressed(Input.Keys.W)) {
 			player.up();
-		if(input.isKeyPressed(Input.Keys.S))
+		}
+		if(input.isKeyPressed(Input.Keys.S)) {
 			player.down();
-		if(input.isKeyPressed(Input.Keys.D))
+		}
+		if(input.isKeyPressed(Input.Keys.D)) {
 			player.right();
-		if(input.isKeyPressed(Input.Keys.A))
+		}
+		if(input.isKeyPressed(Input.Keys.A)) {
 			player.left();
+		}
 
 		if(input.isKeyPressed(Input.Keys.Q))
 			camera.rotate(Gdx.graphics.getDeltaTime() * 90);
 		if(input.isKeyPressed(Input.Keys.E))
 			camera.rotate(-Gdx.graphics.getDeltaTime()*90);
 
-		if(input.isKeyPressed(Input.Keys.CONTROL_LEFT)) a = UPDATE_TIME + Gdx.graphics.getDeltaTime();
-		if(input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
-			a = UPDATE_TIME - Gdx.graphics.getDeltaTime();}
 
 		if(input.isKeyPressed(Input.Keys.LEFT))
 			camera.translate(new Vector2(-Gdx.graphics.getDeltaTime()*50,0));
@@ -209,7 +215,6 @@ public class Algo extends ApplicationAdapter {
 			camera.translate(new Vector2(0, -Gdx.graphics.getDeltaTime() * 50));
 
 		if(input.isKeyPressed(Input.Keys.SPACE)){
-			a = 1f;
 			camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		}
 
