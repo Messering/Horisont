@@ -68,12 +68,13 @@ public class Algo extends ApplicationAdapter {
         Maze a=new Maze(FIELD_SIZE);
         texture_map=a.mass();
 		player=new Player(texture_map,FIELD_SIZE+1,FIELD_SIZE+1,1,1);
-		//MazeSearch(texture_map);
+		MazeSearch(texture_map);
 	}
 
 	public void textures() {
-		for (int x = 1; x < FIELD_SIZE + 1; x++) {
+		for (int x = 1; x < FIELD_SIZE + 1; x++) {//System.out.println();
 			for (int y = 1; y < FIELD_SIZE + 1; y++) {
+				//System.out.print(texture_map[x][y]);
 				if (texture_map[x][y].equals("_n")||texture_map[x][y].equals("_np")) {
 					map[x - 1][y - 1] = new Walk(t_n);}
 
@@ -160,17 +161,19 @@ public class Algo extends ApplicationAdapter {
 				if (texture_map[x][y].contains("p")) {
 					play_x=x-1;
 					play_y=y-1;
+					players=null;
 					players=new Wall(play);
 				}
 			}
 		}
+		System.out.println("good");
 
 	}
 	public void MazeSearch(String[][] texture_m)
 	{
  Recursive RecursiveSearch = new Recursive(texture_m, 1, 1);
 		//RightHandedRule RightHandedSearch = new RightHandedRule(texture_m, 1, 1);
-		RecursiveSearch.InMazeSearch();
+	RecursiveSearch.InMazeSearch();
 		//RightHandedSearch.InMazeSearch();
 	}
 	public void pause()
@@ -195,13 +198,11 @@ public class Algo extends ApplicationAdapter {
 			for (int j = 0; j < FIELD_SIZE; j++){
 				if (i==play_x&&j==play_y){batch.enableBlending();
 					map[i][j].draw(batch, i, j);
-					map[i][j]=null;
 					players.draw(batch,i,j);
 					batch.disableBlending();
 				}
 				else
 				map[i][j].draw(batch, i, j);
-				map[i][j]=null;
 			}
 		batch.end();
 		this.update();
