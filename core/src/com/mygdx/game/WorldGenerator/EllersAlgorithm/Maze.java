@@ -5,7 +5,7 @@ package com.mygdx.game.WorldGenerator.EllersAlgorithm;
  */
 
 public class Maze {
-    private int N;                 // dimension of maze
+    private final int N;                 // dimension of maze
     private boolean[][] north;     // is there a wall to north of cell i, j
     private boolean[][] east;
     private boolean[][] south;
@@ -159,10 +159,10 @@ public class Maze {
 
     // a test client
     public static void main(String[] args) {
-        int N = Integer.parseInt(args[0]);
-        Maze maze = new Maze(N);
-        StdDraw.show(0);
+        //int N = Integer.parseInt(args[0]);
+      //  Maze maze = new Maze(N);
+      //  StdDraw.show(0);
        // maze.draw();
-        maze.solve();
+       // maze.solve();
     }
 }

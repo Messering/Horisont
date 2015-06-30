@@ -1,13 +1,13 @@
 package com.mygdx.game.Main;
 //це можна назвати мейном головною точкою входу нашого проекту , те саме як мейн в с++
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Interface.Screen;
 import com.mygdx.game.Maze_Search.Recursive;
 import com.mygdx.game.Maze_Search.RightHandedRule;
 import com.mygdx.game.Player.Player;
@@ -17,56 +17,63 @@ import com.mygdx.game.WorldGenerator.MazeGenerator;
 
 //In Maze Serching
 import com.mygdx.game.Maze_Search.Recursive;
+import sun.java2d.ScreenUpdateManager;
 
 public class Algo extends ApplicationAdapter {
 	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
-	public static final float UPDATE_TIME = 0.0001f; /*швидкість обновлення лабіринут
-	, зараз застосовується при переміщенні камери
-        */
 	String [][] texture_map;
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
-	Texture play;
 	Cell players;
 	int play_x=0;
 	int play_y=0;
 	Player player;
+	Texture play;
+	Texture t_e;
+	Texture t_n;
+	Texture t_ne;
+	Texture t_nw;
+	Texture t_nwe;
+	Texture t_s;
+	Texture t_se;
+	Texture t_sn;
+	Texture t_sne;
+	Texture t_snw;
+	Texture t_sw;
+	Texture t_swe;
+	Texture t_w;
+	Texture t_we;
 
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
+		play=new Texture(Gdx.files.internal("aplayer.png"));
+		t_e = new Texture(Gdx.files.internal("e.png"));
+		t_n = new Texture(Gdx.files.internal("n.png"));
+		t_ne = new Texture(Gdx.files.internal("ne.png"));
+		t_nw = new Texture(Gdx.files.internal("nw.png"));
+		t_nwe = new Texture(Gdx.files.internal("nwe.png"));
+		t_s = new Texture(Gdx.files.internal("s.png"));
+		t_se = new Texture(Gdx.files.internal("se.png"));
+		t_sn = new Texture(Gdx.files.internal("sn.png"));
+		t_sne = new Texture(Gdx.files.internal("sne.png"));
+		t_snw = new Texture(Gdx.files.internal("snw.png"));
+		t_sw = new Texture(Gdx.files.internal("sw.png"));
+		t_swe = new Texture(Gdx.files.internal("swe.png"));
+		t_w = new Texture(Gdx.files.internal("w.png"));
+		t_we = new Texture(Gdx.files.internal("we.png"));
 		batch = new SpriteBatch();
+		batch.disableBlending();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE+1][FIELD_SIZE+1];
-
-
         Maze a=new Maze(FIELD_SIZE);
-
         texture_map=a.mass();
 		player=new Player(texture_map,FIELD_SIZE+1,FIELD_SIZE+1,1,1);
-		MazeSearch(texture_map);
-		for (int x = 1; x <= FIELD_SIZE; x++) {
-			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
+		//MazeSearch(texture_map);
 	}
-	public void textures() {
-		play=new Texture(Gdx.files.internal("aplayer.png"));
-		Texture t_e = new Texture(Gdx.files.internal("e.png"));
-		Texture t_n = new Texture(Gdx.files.internal("n.png"));
-		Texture t_ne = new Texture(Gdx.files.internal("ne.png"));
-		Texture t_nw = new Texture(Gdx.files.internal("nw.png"));
-		Texture t_nwe = new Texture(Gdx.files.internal("nwe.png"));
-		Texture t_s = new Texture(Gdx.files.internal("s.png"));
-		Texture t_se = new Texture(Gdx.files.internal("se.png"));
-		Texture t_sn = new Texture(Gdx.files.internal("sn.png"));
-		Texture t_sne = new Texture(Gdx.files.internal("sne.png"));
-		Texture t_snw = new Texture(Gdx.files.internal("snw.png"));
-		Texture t_sw = new Texture(Gdx.files.internal("sw.png"));
-		Texture t_swe = new Texture(Gdx.files.internal("swe.png"));
-		Texture t_w = new Texture(Gdx.files.internal("w.png"));
-		Texture t_we = new Texture(Gdx.files.internal("we.png"));
 
-		for (int x = 1; x < FIELD_SIZE + 1; x++) {//System.out.println();
+	public void textures() {
+		for (int x = 1; x < FIELD_SIZE + 1; x++) {
 			for (int y = 1; y < FIELD_SIZE + 1; y++) {
-				//System.out.print(texture_map[x][y]);
 				if (texture_map[x][y].equals("_n")||texture_map[x][y].equals("_np")) {
 					map[x - 1][y - 1] = new Walk(t_n);}
 
@@ -157,6 +164,7 @@ public class Algo extends ApplicationAdapter {
 				}
 			}
 		}
+
 	}
 	public void MazeSearch(String[][] texture_m)
 	{
@@ -165,32 +173,42 @@ public class Algo extends ApplicationAdapter {
 		RecursiveSearch.InMazeSearch();
 		//RightHandedSearch.InMazeSearch();
 	}
-	@Override
+	public void pause()
+	{
+		try {
+			Thread.sleep(80);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	public void render() { //рендеремо
-		this.update();
+		this.pause();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		texture_map=null;
 		texture_map=player.mapp();
 		textures();
 		batch.setProjectionMatrix(camera.combined);
-		camera.update();  //обновляєм проект і промальовуєм під час переміщення
+		//camera.update();  //обновляєм проект і промальовуєм під час переміщення
 		batch.begin();
 		for (int i = 0; i <FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
 				if (i==play_x&&j==play_y){batch.enableBlending();
-					players.draw(batch,i,j);
 					map[i][j].draw(batch, i, j);
+					map[i][j]=null;
+					players.draw(batch,i,j);
 					batch.disableBlending();
 				}
 				else
 				map[i][j].draw(batch, i, j);
+				map[i][j]=null;
 			}
 		batch.end();
+		this.update();
 	}
+
 	public void update() {  //прописане керування але подумую щоб запхати в новий клас або пакет контроллер
-
 		Input input = Gdx.input;
-
 		if(input.isKeyPressed(Input.Keys.W)) {
 			player.up();
 		}
@@ -204,27 +222,30 @@ public class Algo extends ApplicationAdapter {
 			player.left();
 		}
 
-		if(input.isKeyPressed(Input.Keys.Q))
-			camera.rotate(Gdx.graphics.getDeltaTime() * 90);
-		if(input.isKeyPressed(Input.Keys.E))
-			camera.rotate(-Gdx.graphics.getDeltaTime()*90);
+		if(input.isKeyPressed(Input.Keys.Q)){
+			camera.rotate(Gdx.graphics.getDeltaTime() * 90);}
 
+		if(input.isKeyPressed(Input.Keys.E)){
+			camera.rotate(-Gdx.graphics.getDeltaTime()*90);}
 
-		if(input.isKeyPressed(Input.Keys.LEFT))
-			camera.translate(new Vector2(-Gdx.graphics.getDeltaTime()*50,0));
-		if(input.isKeyPressed(Input.Keys.RIGHT))
+		if(input.isKeyPressed(Input.Keys.LEFT)){
+			camera.translate(new Vector2(-Gdx.graphics.getDeltaTime()*50,0));}
+
+		if(input.isKeyPressed(Input.Keys.RIGHT)){
 			camera.translate(new Vector2(Gdx.graphics.getDeltaTime()*50,0));
-		if(input.isKeyPressed(Input.Keys.UP))
+		}
+
+		if(input.isKeyPressed(Input.Keys.UP)){
 			camera.translate(new Vector2(0, Gdx.graphics.getDeltaTime() * 50));
-		if(input.isKeyPressed(Input.Keys.DOWN))
-			camera.translate(new Vector2(0, -Gdx.graphics.getDeltaTime() * 50));
+		}
+
+		if(input.isKeyPressed(Input.Keys.DOWN)){
+			camera.translate(new Vector2(0, -Gdx.graphics.getDeltaTime() * 50));}
 
 		if(input.isKeyPressed(Input.Keys.SPACE)){
 			camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		}
-
 		camera.update();
-
 	}
 }
 

@@ -1,9 +1,6 @@
 package com.mygdx.game.Player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Main.Cell;
-import com.mygdx.game.Wall_Empty.Unit;
+
 
 /**
  * Created by Vlad on 26.06.2015.
@@ -14,7 +11,6 @@ public class Player {
     public Player(String[][] m,final int x,final int y, final int hi, final int we) {
         h = hi;
         w = we;
-        mass = new String[x][y];
         mass = m;
         mass[h][w] += "p";
     }
