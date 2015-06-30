@@ -44,8 +44,6 @@ public class RightHandedRule {
             }
       //  while(i != maze.length-2 && j != maze.length-2) {
         while( i != 13 || j != 8){
-          // if(stop()) return true;
-    //        cou = cou+1; if(cou ==10) return true;
             if(!maze[i][j].contains("1")) maze[i][j] += "1";
            // if (i == maze.length - 2 || j == maze.length - 2) return true;
             System.out.println("FindPath implementation" + ": i=" + i + ", j=" + j + ", Dir=" + Direction);
@@ -57,7 +55,6 @@ public class RightHandedRule {
                 else Direction++;
                 MoveForward();
             }
-
             //SHIT START
             //SHIT ENDS
         }
@@ -109,27 +106,6 @@ public class RightHandedRule {
             default: System.out.println("unexpected direction value, direction=" + Direction); Direction=0;
                 return;
         }
-
-        /*if(Direction==0)
-                if (!maze[i][j].contains("n")) j++;
-                else Direction=1; MoveForward(); return;
-        if(Direction==1)
-                if (!maze[i][j].contains("e")) i++;
-                else Direction=2; MoveForward();
-                return;
-        if(Direction==2)
-                if (!maze[i][j].contains("s")) j--;
-                else {Direction=3; MoveForward();
-                return;}
-        if(Direction==3)
-                if (!maze[i][j].contains("w")) i--;
-                else {Direction=0; MoveForward();
-                return;}
-            else{
-        System.out.println("unexpected direction value, direction=" + Direction);
-        Direction = 0;
-        return;
-    }*/
     }
     private boolean stop()
     {
