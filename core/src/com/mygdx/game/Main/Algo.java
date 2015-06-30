@@ -43,7 +43,7 @@ public class Algo extends ApplicationAdapter {
 
         texture_map=a.mass();
 		player=new Player(texture_map,FIELD_SIZE+1,FIELD_SIZE+1,1,1);
-	//	MazeSearch(texture_map);
+		MazeSearch(texture_map);
 		for (int x = 1; x <= FIELD_SIZE; x++) {
 			for (int y = 1; y <= FIELD_SIZE; y++) {System.out.print(texture_map[x][y]);}System.out.println();}
 	}
@@ -79,7 +79,7 @@ public class Algo extends ApplicationAdapter {
 				if (texture_map[x][y].equals("_nw")||texture_map[x][y].equals("_nwp")) {
 					map[x - 1][y - 1] = new Walk(t_nw);
 				}
-				if (texture_map[x][y].equals("_nwe")||texture_map[x][y].equals("_nwe")) {
+				if (texture_map[x][y].equals("_nwe")||texture_map[x][y].equals("_nwep")) {
 					map[x - 1][y - 1] = new Walk(t_nwe);
 				}
 				if (texture_map[x][y].equals("_s")||texture_map[x][y].equals("_sp")) {
@@ -109,45 +109,45 @@ public class Algo extends ApplicationAdapter {
 				if (texture_map[x][y].equals("_we")||texture_map[x][y].equals("_wep")) {
 					map[x - 1][y - 1] = new Walk(t_we);
 				}
-				if (texture_map[x][y].equals("_n1")) {
+				if (texture_map[x][y].equals("_n1")||texture_map[x][y].equals("_np1")) {
 					map[x - 1][y - 1] = new Wall(t_n);}
-				if (texture_map[x][y].equals("_e1")) {
+				if (texture_map[x][y].equals("_e1")||texture_map[x][y].equals("_ep1")) {
 					map[x - 1][y - 1] = new Wall(t_e);
 				}
-				if (texture_map[x][y].equals("_ne1")) {
+				if (texture_map[x][y].equals("_ne1")||texture_map[x][y].equals("_nep1")) {
 					map[x - 1][y - 1] = new Wall(t_ne);
 				}
-				if (texture_map[x][y].equals("_nw1")) {
+				if (texture_map[x][y].equals("_nw1")||texture_map[x][y].equals("_nwp1")) {
 					map[x - 1][y - 1] = new Wall(t_nw);
 				}
-				if (texture_map[x][y].equals("_nwe1")) {
+				if (texture_map[x][y].equals("_nwe1")||texture_map[x][y].equals("_nwep1")) {
 					map[x - 1][y - 1] = new Wall(t_nwe);
 				}
-				if (texture_map[x][y].equals("_s1")) {
+				if (texture_map[x][y].equals("_s1")||texture_map[x][y].equals("_sp1")) {
 					map[x - 1][y - 1] = new Wall(t_s);
 				}
-				if (texture_map[x][y].equals("_se1")) {
+				if (texture_map[x][y].equals("_se1")||texture_map[x][y].equals("_sep1")) {
 					map[x - 1][y - 1] = new Wall(t_se);
 				}
-				if (texture_map[x][y].equals("_sn1")) {
+				if (texture_map[x][y].equals("_sn1")||texture_map[x][y].equals("_snp1")) {
 					map[x - 1][y - 1] = new Wall(t_sn);
 				}
-				if (texture_map[x][y].equals("_sne1")) {
+				if (texture_map[x][y].equals("_sne1")||texture_map[x][y].equals("_snep1")) {
 					map[x - 1][y - 1] = new Wall(t_sne);
 				}
-				if (texture_map[x][y].equals("_snw1")) {
+				if (texture_map[x][y].equals("_snw1")||texture_map[x][y].equals("_snwp1")) {
 					map[x - 1][y - 1] = new Wall(t_snw);
 				}
-				if (texture_map[x][y].equals("_sw1")) {
+				if (texture_map[x][y].equals("_sw1")||texture_map[x][y].equals("_swp1")) {
 					map[x - 1][y - 1] = new Wall(t_sw);
 				}
-				if (texture_map[x][y].equals("_swe1")) {
+				if (texture_map[x][y].equals("_swe1")||texture_map[x][y].equals("_swep1")) {
 					map[x - 1][y - 1] = new Wall(t_swe);
 				}
-				if (texture_map[x][y].equals("_w1")) {
+				if (texture_map[x][y].equals("_w1")||texture_map[x][y].equals("_wp1")) {
 					map[x - 1][y - 1] = new Wall(t_w);
 				}
-				if (texture_map[x][y].equals("_we1")) {
+				if (texture_map[x][y].equals("_we1")||texture_map[x][y].equals("_wep1")) {
 					map[x - 1][y - 1] = new Wall(t_we);
 				}
 				if (texture_map[x][y].contains("p")) {
@@ -160,10 +160,10 @@ public class Algo extends ApplicationAdapter {
 	}
 	public void MazeSearch(String[][] texture_m)
 	{
-// Recursive RecursiveSearch = new Recursive(texture_m, 1, 1);
-		RightHandedRule RightHandedSearch = new RightHandedRule(texture_m, 1, 1);
-// RecursiveSearch.InMazeSearch();
-		RightHandedSearch.InMazeSearch();
+ Recursive RecursiveSearch = new Recursive(texture_m, 1, 1);
+		//RightHandedRule RightHandedSearch = new RightHandedRule(texture_m, 1, 1);
+		RecursiveSearch.InMazeSearch();
+		//RightHandedSearch.InMazeSearch();
 	}
 	@Override
 	public void render() { //рендеремо
@@ -177,7 +177,12 @@ public class Algo extends ApplicationAdapter {
 		batch.begin();
 		for (int i = 0; i <FIELD_SIZE; i++)
 			for (int j = 0; j < FIELD_SIZE; j++){
-				if (i==play_x&&j==play_y){batch.enableBlending();players.draw(batch,i,j);map[i][j].draw(batch, i, j);}else
+				if (i==play_x&&j==play_y){batch.enableBlending();
+					players.draw(batch,i,j);
+					map[i][j].draw(batch, i, j);
+					batch.disableBlending();
+				}
+				else
 				map[i][j].draw(batch, i, j);
 			}
 		batch.end();
