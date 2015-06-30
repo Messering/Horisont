@@ -46,7 +46,7 @@ public class RightHandedRule {
         while( i != 13 || j != 8){
           // if(stop()) return true;
     //        cou = cou+1; if(cou ==10) return true;
-            maze[i][j] += '1';
+            if(!maze[i][j].contains("1")) maze[i][j] += "1";
            // if (i == maze.length - 2 || j == maze.length - 2) return true;
             System.out.println("FindPath implementation" + ": i=" + i + ", j=" + j + ", Dir=" + Direction);
             System.out.println("RightWallExist - " + RightWallExist());
