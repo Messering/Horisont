@@ -20,7 +20,7 @@ import com.mygdx.game.Maze_Search.Recursive;
 import sun.java2d.ScreenUpdateManager;
 
 public class Algo extends ApplicationAdapter {
-	public static final int FIELD_SIZE = 13; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
+	public static final int FIELD_SIZE = 33; //розмір нашого лабіринта, скілкьи на скілкьи буде наш масив
 	String [][] texture_map;
 	SpriteBatch batch; //спрайти хто не розумію вам сюди  http://habrahabr.ru/post/159027/
 	OrthographicCamera camera;
@@ -29,6 +29,7 @@ public class Algo extends ApplicationAdapter {
 	int play_y=0;
 	Player player;
 	Texture play;
+	Texture t_;
 	Texture t_e;
 	Texture t_n;
 	Texture t_ne;
@@ -47,6 +48,7 @@ public class Algo extends ApplicationAdapter {
 	Cell[][] map;//масив який набирає параметірв кольору розміру квадрата , вся реалізація в класі СеІІ
 	public void create() { //так, це повинні знати, головний ініціалізатор входження
 		play=new Texture(Gdx.files.internal("aplayer.png"));
+		t_=new Texture(Gdx.files.internal("_.png"));
 		t_e = new Texture(Gdx.files.internal("e.png"));
 		t_n = new Texture(Gdx.files.internal("n.png"));
 		t_ne = new Texture(Gdx.files.internal("ne.png"));
@@ -75,6 +77,8 @@ public class Algo extends ApplicationAdapter {
 		for (int x = 1; x < FIELD_SIZE + 1; x++) {//System.out.println();
 			for (int y = 1; y < FIELD_SIZE + 1; y++) {
 				//System.out.print(texture_map[x][y]);
+				if (texture_map[x][y].equals("_")||texture_map[x][y].equals("_p")) {
+					map[x - 1][y - 1] = new Walk(t_);}
 				if (texture_map[x][y].equals("_n")||texture_map[x][y].equals("_np")) {
 					map[x - 1][y - 1] = new Walk(t_n);}
 
@@ -117,6 +121,8 @@ public class Algo extends ApplicationAdapter {
 				if (texture_map[x][y].equals("_we")||texture_map[x][y].equals("_wep")) {
 					map[x - 1][y - 1] = new Walk(t_we);
 				}
+				if (texture_map[x][y].equals("_1")||texture_map[x][y].equals("_p1")) {
+					map[x - 1][y - 1] = new Wall(t_);}
 				if (texture_map[x][y].equals("_n1")||texture_map[x][y].equals("_np1")) {
 					map[x - 1][y - 1] = new Wall(t_n);}
 				if (texture_map[x][y].equals("_e1")||texture_map[x][y].equals("_ep1")) {
@@ -201,8 +207,9 @@ public class Algo extends ApplicationAdapter {
 					players.draw(batch,i,j);
 					batch.disableBlending();
 				}
-				else
-				map[i][j].draw(batch, i, j);
+				else {
+					map[i][j].draw(batch, i, j);
+				}
 			}
 		batch.end();
 		this.update();
