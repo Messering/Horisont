@@ -26,7 +26,9 @@ public class Algo extends ApplicationAdapter {
 	OrthographicCamera camera;
 	Cell players;
 	int play_x=0;
+	Cell w;
 	int play_y=0;
+	Texture way;
 	Player player;
 	Texture play;
 	Texture t_;
@@ -63,12 +65,15 @@ public class Algo extends ApplicationAdapter {
 		t_swe = new Texture(Gdx.files.internal("swe.png"));
 		t_w = new Texture(Gdx.files.internal("w.png"));
 		t_we = new Texture(Gdx.files.internal("we.png"));
+		way=new Texture(Gdx.files.internal("way.png"));
+		w=new Walk(way);
 		batch = new SpriteBatch();
 		batch.disableBlending();
 		camera = new OrthographicCamera(FIELD_SIZE, FIELD_SIZE);
 		map = new Cell[FIELD_SIZE+1][FIELD_SIZE+1];
         Maze a=new Maze(FIELD_SIZE);
         texture_map=a.mass();
+		a=null;
 		player=new Player(texture_map,FIELD_SIZE+1,FIELD_SIZE+1,1,1);
 		MazeSearch(texture_map);
 	}
@@ -122,58 +127,56 @@ public class Algo extends ApplicationAdapter {
 					map[x - 1][y - 1] = new Walk(t_we);
 				}
 				if (texture_map[x][y].equals("_1")||texture_map[x][y].equals("_p1")) {
-					map[x - 1][y - 1] = new Wall(t_);}
+					map[x - 1][y - 1] = new Walk(t_);}
 				if (texture_map[x][y].equals("_n1")||texture_map[x][y].equals("_np1")) {
-					map[x - 1][y - 1] = new Wall(t_n);}
+					map[x - 1][y - 1] = new Walk(t_n);}
 				if (texture_map[x][y].equals("_e1")||texture_map[x][y].equals("_ep1")) {
-					map[x - 1][y - 1] = new Wall(t_e);
+					map[x - 1][y - 1] = new Walk(t_e);
 				}
 				if (texture_map[x][y].equals("_ne1")||texture_map[x][y].equals("_nep1")) {
-					map[x - 1][y - 1] = new Wall(t_ne);
+					map[x - 1][y - 1] = new Walk(t_ne);
 				}
 				if (texture_map[x][y].equals("_nw1")||texture_map[x][y].equals("_nwp1")) {
-					map[x - 1][y - 1] = new Wall(t_nw);
+					map[x - 1][y - 1] = new Walk(t_nw);
 				}
 				if (texture_map[x][y].equals("_nwe1")||texture_map[x][y].equals("_nwep1")) {
-					map[x - 1][y - 1] = new Wall(t_nwe);
+					map[x - 1][y - 1] = new Walk(t_nwe);
 				}
 				if (texture_map[x][y].equals("_s1")||texture_map[x][y].equals("_sp1")) {
-					map[x - 1][y - 1] = new Wall(t_s);
+					map[x - 1][y - 1] = new Walk(t_s);
 				}
 				if (texture_map[x][y].equals("_se1")||texture_map[x][y].equals("_sep1")) {
-					map[x - 1][y - 1] = new Wall(t_se);
+					map[x - 1][y - 1] = new Walk(t_se);
 				}
 				if (texture_map[x][y].equals("_sn1")||texture_map[x][y].equals("_snp1")) {
-					map[x - 1][y - 1] = new Wall(t_sn);
+					map[x - 1][y - 1] = new Walk(t_sn);
 				}
 				if (texture_map[x][y].equals("_sne1")||texture_map[x][y].equals("_snep1")) {
-					map[x - 1][y - 1] = new Wall(t_sne);
+					map[x - 1][y - 1] = new Walk(t_sne);
 				}
 				if (texture_map[x][y].equals("_snw1")||texture_map[x][y].equals("_snwp1")) {
-					map[x - 1][y - 1] = new Wall(t_snw);
+					map[x - 1][y - 1] = new Walk(t_snw);
 				}
 				if (texture_map[x][y].equals("_sw1")||texture_map[x][y].equals("_swp1")) {
-					map[x - 1][y - 1] = new Wall(t_sw);
+					map[x - 1][y - 1] = new Walk(t_sw);
 				}
 				if (texture_map[x][y].equals("_swe1")||texture_map[x][y].equals("_swep1")) {
-					map[x - 1][y - 1] = new Wall(t_swe);
+					map[x - 1][y - 1] = new Walk(t_swe);
 				}
 				if (texture_map[x][y].equals("_w1")||texture_map[x][y].equals("_wp1")) {
-					map[x - 1][y - 1] = new Wall(t_w);
+					map[x - 1][y - 1] = new Walk(t_w);
 				}
 				if (texture_map[x][y].equals("_we1")||texture_map[x][y].equals("_wep1")) {
-					map[x - 1][y - 1] = new Wall(t_we);
+					map[x - 1][y - 1] = new Walk(t_we);
 				}
 				if (texture_map[x][y].contains("p")) {
 					play_x=x-1;
 					play_y=y-1;
 					players=null;
-					players=new Wall(play);
+					players=new Walk(play);
 				}
 			}
 		}
-		System.out.println("good");
-
 	}
 	public void MazeSearch(String[][] texture_m)
 	{
@@ -208,6 +211,10 @@ public class Algo extends ApplicationAdapter {
 					batch.disableBlending();
 				}
 				else {
+					if(texture_map[i+1][j+1].contains("1")){batch.enableBlending();
+						w.draw(batch,i,j);
+						map[i][j].draw(batch, i, j);
+						batch.disableBlending();}else
 					map[i][j].draw(batch, i, j);
 				}
 			}

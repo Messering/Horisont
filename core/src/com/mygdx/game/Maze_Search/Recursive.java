@@ -39,7 +39,7 @@ public class Recursive {
         if(i<1 || i>=maze.length-1 || j<1 || j>=maze.length-1)    return false;
 
         //if goal
-        if (i == 13 && j == 8) return true;
+        if (i == 10 && j == 10) return true;
 
        /*if (!(i == 1 || j == 1)) {
             if (maze[i][j].contains("w") && maze[i][j].contains("e") && maze[i][j].contains("s")) return false;
